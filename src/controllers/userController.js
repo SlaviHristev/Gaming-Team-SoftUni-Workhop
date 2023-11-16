@@ -19,5 +19,13 @@ router.get('/users/login', (req,res) => {
     res.render('users/login');
 });
 
+router.post('/users/login', async (req,res) => {
+    const {email, password} = req.body;
+    
+    const token = await userManager.login(email, password);
+    res.cookie('token', token, {httpOnly:true});
+    res.redirect('/');
+})
+
 
 module.exports = router;
