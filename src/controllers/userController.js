@@ -25,6 +25,11 @@ router.post('/users/login', async (req,res) => {
     const token = await userManager.login(email, password);
     res.cookie('token', token, {httpOnly:true});
     res.redirect('/');
+});
+
+router.get('/users/logout', (req,res) => {
+    res.clearCookie('token');
+    res.redirect('/');
 })
 
 
