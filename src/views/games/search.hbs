@@ -20,12 +20,14 @@
                 <div class="search-list">
                 {{#each games}}
                   {{> game}}
+                  {{else}}
+             <div class="no-match">
+                <p>No match was found!</p>
+            </div> 
+
                 {{/each}}  
                 </div>
             </div>
 
-            <!-- <div class="no-match">
-                <p>No match was found!</p>
-            </div> -->
         </section>
     </main>
