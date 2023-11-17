@@ -7,5 +7,11 @@ router.use(homeController);
 router.use(userController);
 router.use(gamesController);
 
+router.get('*', (req,res) =>{
+   
+    res.render('404')
+    
+})
+
 
 module.exports = router;

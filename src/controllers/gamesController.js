@@ -45,5 +45,18 @@ router.get('/games/:gameId/buy', async (req,res) =>{
     const userId = req.user._id;
     await gameManager.buy(gameId,userId);
     res.redirect(`/games/${gameId}/details`)
-})
+});
+
+router.get('/search', (req,res) => {
+    res.render('games/search')
+});
+
+router.post('/search', async (req,res) => {
+    const { search, platform} = req.body;
+    const games = await gameManager.search(search, platform);
+    console.log(games);
+    res.render('games/search', {games})
+})  
+
+
 module.exports = router;
