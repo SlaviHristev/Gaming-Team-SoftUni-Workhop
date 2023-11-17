@@ -9,3 +9,5 @@ exports.findOne = (gameId) => Game.findById(gameId);
 exports.delete = (gameId) =>  Game.findByIdAndDelete(gameId);
 
 exports.edit = (gameId, gameData) => Game.findByIdAndUpdate(gameId,gameData);
+
+exports.buy = (gameId, userId) => Game.findByIdAndUpdate(gameId, {$push: {boughtBy: userId}});

@@ -16,7 +16,10 @@ router.post('/games/create', async (req,res) => {
 router.get('/games/:gameId/details', async (req,res) => {
     const game = await gameManager.findOne(req.params.gameId).lean();
     const isOwner = game.ownerId === req.user?._id;
-    res.render('games/details', {game, isOwner});
+    const isBuyer =!isOwner && game.boughtBy?.map(id => id.toString()).includes(req.user?._id.toString());
+
+    
+    res.render('games/details', {game, isOwner, isBuyer});
 })
 
 router.get('/games/:gameId/delete', async (req,res) => {
@@ -35,5 +38,12 @@ router.post('/games/:gameId/edit', async (req,res) =>{
     const {name,imageUrl,description, genre,price, platform} = req.body;
     await gameManager.edit(gameId,{name,imageUrl,description, genre,price, platform});
     res.redirect(`/games/${gameId}/details`);
+});
+
+router.get('/games/:gameId/buy', async (req,res) =>{
+    const gameId =req.params.gameId;
+    const userId = req.user._id;
+    await gameManager.buy(gameId,userId);
+    res.redirect(`/games/${gameId}/details`)
 })
 module.exports = router;
